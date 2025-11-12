@@ -1,0 +1,85 @@
+
+
+SIZE = 10
+hash_table = [None] * SIZE
+
+# Hash Function (Division Method)
+def hash_func(key):
+    return key % SIZE
+
+def insert():
+    key = int(input("Enter key to insert: "))
+    index = hash_func(key)
+    start_index = index
+
+    while hash_table[index] is not None:
+        # If same key already present
+        if hash_table[index] == key:
+            print("Key already exists!")
+            return
+        index = (index + 1) % SIZE
+        if index == start_index:
+            print("Hash Table is full!")
+            return
+
+    hash_table[index] = key
+    print(f"Key {key} inserted at index {index}")
+
+def search():
+    key = int(input("Enter key to search: "))
+    index = hash_func(key)
+    start_index = index
+
+    while hash_table[index] is not None:
+        if hash_table[index] == key:
+            print(f"Key {key} found at index {index}")
+            return
+        index = (index + 1) % SIZE
+        if index == start_index:
+            break
+    print("Key not found!")
+
+def delete():
+    key = int(input("Enter key to delete: "))
+    index = hash_func(key)
+    start_index = index
+
+    while hash_table[index] is not None:
+        if hash_table[index] == key:
+            hash_table[index] = None
+            print(f"Key {key} deleted successfully!")
+            return
+        index = (index + 1) % SIZE
+        if index == start_index:
+            break
+    print("Key not found!")
+
+def display():
+    print("\n--- Hash Table ---")
+    for i in range(SIZE):
+        print(f"Index {i}: {hash_table[i]}")
+
+# ------- Menu -------
+while True:
+    print("\n==== HASH TABLE MENU (Linear Probing) ====")
+    print("1. Insert Key")
+    print("2. Search Key")
+    print("3. Delete Key")
+    print("4. Display Table")
+    print("5. Exit")
+
+    choice = input("Enter your choice: ")
+
+    if choice == '1':
+        insert()
+    elif choice == '2':
+        search()
+    elif choice == '3':
+        delete()
+    elif choice == '4':
+        display()
+    elif choice == '5':
+        print("Exiting... Goodbye!")
+        break
+    else:
+        print("Invalid choice! Try again.")
