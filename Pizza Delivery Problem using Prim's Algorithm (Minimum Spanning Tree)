@@ -1,0 +1,42 @@
+
+
+INF = 9999999
+
+# Number of locations (vertices)
+n = int(input("Enter number of locations: "))
+
+# Create adjacency matrix
+print("Enter the adjacency matrix (use 0 if no connection):")
+graph = []
+for i in range(n):
+    row = list(map(int, input().split()))
+    graph.append(row)
+
+selected = [False] * n
+no_edge = 0
+selected[0] = True
+
+print("\nEdges in Minimum Spanning Tree (MST):")
+
+total_cost = 0
+
+while no_edge < n - 1:
+    minimum = INF
+    x = 0
+    y = 0
+
+    for i in range(n):
+        if selected[i]:
+            for j in range(n):
+                if (not selected[j]) and graph[i][j]:
+                    if minimum > graph[i][j]:
+                        minimum = graph[i][j]
+                        x = i
+                        y = j
+
+    print(f"{x} - {y} : {graph[x][y]}")
+    total_cost += graph[x][y]
+    selected[y] = True
+    no_edge += 1
+
+print("\nTotal Minimum Time for Pizza Delivery:", total_cost)
