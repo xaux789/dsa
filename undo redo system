@@ -1,0 +1,55 @@
+undo_stack = []
+redo_stack = []
+document = ""
+
+def make_change():
+    global document
+    change = input("Enter text to add: ")
+    undo_stack.append(document)
+    document += change
+    print("Change added.")
+
+def undo_action():
+    global document
+    if not undo_stack:
+        print("Nothing to undo.")
+        return
+    redo_stack.append(document)
+    document = undo_stack.pop()
+    print("Undo done.")
+
+def redo_action():
+    global document
+    if not redo_stack:
+        print("Nothing to redo.")
+        return
+    undo_stack.append(document)
+    document = redo_stack.pop()
+    print("Redo done.")
+
+def display_document():
+    print("Current Document State:", document)
+
+while True:
+    print("\n==== TEXT EDITOR MENU ====")
+    print("1. Make a Change")
+    print("2. Undo")
+    print("3. Redo")
+    print("4. Display Document")
+    print("5. Exit")
+
+    choice = input("Enter your choice: ")
+
+    if choice == '1':
+        make_change()
+    elif choice == '2':
+        undo_action()
+    elif choice == '3':
+        redo_action()
+    elif choice == '4':
+        display_document()
+    elif choice == '5':
+        print("Exiting... Goodbye!")
+        break
+    else:
+        print("Invalid choice! Try again.")
