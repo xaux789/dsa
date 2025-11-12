@@ -1,0 +1,76 @@
+
+
+SIZE = 10  # fixed hash table size
+
+# create empty hash table with 10 buckets (lists)
+hash_table = [[] for _ in range(SIZE)]
+
+# hash function (division method)
+def hash_func(key):
+    return key % SIZE
+
+def insert():
+    key = int(input("Enter key (integer): "))
+    value = input("Enter value: ")
+    index = hash_func(key)
+
+    # check if key already exists → update it
+    for pair in hash_table[index]:
+        if pair[0] == key:
+            pair[1] = value
+            print("Key already exists — value updated!")
+            return
+
+    hash_table[index].append([key, value])
+    print(f"Inserted ({key}, {value}) at index {index}")
+
+def search():
+    key = int(input("Enter key to search: "))
+    index = hash_func(key)
+
+    for pair in hash_table[index]:
+        if pair[0] == key:
+            print(f"Key found! Value = {pair[1]}")
+            return
+    print("Key not found!")
+
+def delete():
+    key = int(input("Enter key to delete: "))
+    index = hash_func(key)
+
+    for pair in hash_table[index]:
+        if pair[0] == key:
+            hash_table[index].remove(pair)
+            print("Key deleted successfully!")
+            return
+    print("Key not found!")
+
+def display():
+    print("\n--- Hash Table ---")
+    for i in range(SIZE):
+        print(f"Index {i}:", hash_table[i])
+
+# ------- Menu -------
+while True:
+    print("\n==== HASH TABLE MENU ====")
+    print("1. Insert")
+    print("2. Search")
+    print("3. Delete")
+    print("4. Display")
+    print("5. Exit")
+
+    choice = input("Enter choice: ")
+
+    if choice == '1':
+        insert()
+    elif choice == '2':
+        search()
+    elif choice == '3':
+        delete()
+    elif choice == '4':
+        display()
+    elif choice == '5':
+        print("Exiting... Goodbye!")
+        break
+    else:
+        print("Invalid choice!")
