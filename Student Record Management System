@@ -1,0 +1,151 @@
+class Node:
+    def __init__(self, roll, name, marks):
+        self.roll = roll
+        self.name = name
+        self.marks = marks
+        self.next = None
+
+class StudentList:
+    def __init__(self):
+        self.head = None
+
+    def add_student(self):
+        roll = int(input("Enter Roll No: "))
+        name = input("Enter Name: ")
+        marks = float(input("Enter Marks: "))
+        new_node = Node(roll, name, marks)
+
+        if self.head is None:
+            self.head = new_node
+        else:
+            temp = self.head
+            while temp.next:
+                temp = temp.next
+            temp.next = new_node
+        print("Student added successfully!")
+
+    def display(self):
+        if self.head is None:
+            print("No records found.")
+            return
+        temp = self.head
+        while temp:
+            print(f"Roll: {temp.roll}, Name: {temp.name}, Marks: {temp.marks}")
+            temp = temp.next
+
+    def search(self):
+        roll = int(input("Enter Roll No to search: "))
+        temp = self.head
+        while temp:
+            if temp.roll == roll:
+                print(f"Found → Roll: {temp.roll}, Name: {temp.name}, Marks: {temp.marks}")
+                return
+            temp = temp.next
+        print("Student not found.")
+
+    def delete(self):
+        roll = int(input("Enter Roll No to delete: "))
+        temp = self.head
+
+        if temp is None:
+            print("List empty.")
+            return
+
+        if temp.roll == roll:
+            self.head = temp.next
+            print("Record deleted successfully!")
+            return
+
+        prev = None
+        while temp and temp.roll != roll:
+            prev = temp
+            temp = temp.next
+
+        if temp is None:
+            print("Record not found.")
+            return
+
+        prev.next = temp.next
+        print("Record deleted successfully!")
+
+    def update(self):
+        roll = int(input("Enter Roll No to update: "))
+        temp = self.head
+        while temp:
+            if temp.roll == roll:
+                temp.name = input("Enter new Name: ")
+                temp.marks = float(input("Enter new Marks: "))
+                print("Record updated successfully!")
+                return
+            temp = temp.next
+        print("Record not found.")
+
+    def sort_by_roll(self):
+        if self.head is None:
+            print("List empty.")
+            return
+        swapped = True
+        while swapped:
+            swapped = False
+            temp = self.head
+            while temp.next:
+                if temp.roll > temp.next.roll:
+                    temp.roll, temp.next.roll = temp.next.roll, temp.roll
+                    temp.name, temp.next.name = temp.next.name, temp.name
+                    temp.marks, temp.next.marks = temp.next.marks, temp.marks
+                    swapped = True
+                temp = temp.next
+        print("List sorted by Roll No (Ascending).")
+
+    def sort_by_marks(self):
+        if self.head is None:
+            print("List empty.")
+            return
+        swapped = True
+        while swapped:
+            swapped = False
+            temp = self.head
+            while temp.next:
+                if temp.marks < temp.next.marks:  # descending
+                    temp.roll, temp.next.roll = temp.next.roll, temp.roll
+                    temp.name, temp.next.name = temp.next.name, temp.name
+                    temp.marks, temp.next.marks = temp.next.marks, temp.marks
+                    swapped = True
+                temp = temp.next
+        print("List sorted by Marks (Descending).")
+
+# -------- Menu --------
+slist = StudentList()
+
+while True:
+    print("\n===== STUDENT RECORD MENU =====")
+    print("1. Add Student")
+    print("2. Display Students")
+    print("3. Search Student")
+    print("4. Delete Student")
+    print("5. Update Student")
+    print("6. Sort by Roll No")
+    print("7. Sort by Marks")
+    print("8. Exit")
+
+    choice = input("Enter your choice: ")
+
+    if choice == '1':
+        slist.add_student()
+    elif choice == '2':
+        slist.display()
+    elif choice == '3':
+        slist.search()
+    elif choice == '4':
+        slist.delete()
+    elif choice == '5':
+        slist.update()
+    elif choice == '6':
+        slist.sort_by_roll()
+    elif choice == '7':
+        slist.sort_by_marks()
+    elif choice == '8':
+        print("Exiting... Goodbye!")
+        break
+    else:
+        print("Invalid choice! Try again.")
