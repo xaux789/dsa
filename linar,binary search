@@ -1,0 +1,66 @@
+ids = []
+n = int(input("Enter number of customer IDs: "))
+for i in range(n):
+    ids.append(int(input(f"Enter ID {i+1}: ")))
+
+def linear_search(arr, key):
+    for i in range(len(arr)):
+        if arr[i] == key:
+            return i
+    return -1
+
+def binary_search(arr, key):
+    for i in range(len(arr)-1):
+        for j in range(i+1, len(arr)):
+            if arr[i] > arr[j]:
+                temp = arr[i]
+                arr[i] = arr[j]
+                arr[j] = temp
+
+    low = 0
+    high = len(arr) - 1
+    while low <= high:
+        mid = (low + high) // 2
+        if arr[mid] == key:
+            return mid
+        elif arr[mid] < key:
+            low = mid + 1
+        else:
+            high = mid - 1
+    return -1
+
+while True:
+    print("\n==== SEARCH MENU ====")
+    print("1. Linear Search")
+    print("2. Binary Search")
+    print("3. Display IDs")
+    print("4. Exit")
+    ch = input("Enter choice: ")
+
+    if ch == '1':
+        key = int(input("Enter ID to search: "))
+        pos = linear_search(ids, key)
+        if pos != -1:
+            print("ID found at position:", pos + 1)
+        else:
+            print("ID not found")
+
+    elif ch == '2':
+        key = int(input("Enter ID to search: "))
+        pos = binary_search(ids, key)
+        if pos != -1:
+            print("ID found at position (after sorting):", pos + 1)
+        else:
+            print("ID not found")
+
+    elif ch == '3':
+        for i in range(len(ids)):
+            print(ids[i], end=" ")
+        print()
+
+    elif ch == '4':
+        print("Exiting...")
+        break
+
+    else:
+        print("Invalid choice")
